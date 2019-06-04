@@ -1,0 +1,60 @@
+import React, { Fragment } from 'react';
+
+import * as Controls from './header-controls';
+
+import { Flex, Box } from '../shared';
+
+const HeaderMenu = ({
+    links, activeUrl, setActiveUrl, userLinks,
+}) => (
+    <Flex justifyContent="right" alignItems="center" flexDirection="column">
+        <Flex width="100%" justifyContent="flex-end" pb="20px">
+            <Controls.SearchIcon />
+            <Box pl="15px">
+                <Controls.ShopIcon />
+            </Box>
+        </Flex>
+        <Flex>
+            {links.map(({ url, title }, index) => (
+                <Box
+                    key={url}
+                    as="span"
+                    pl={
+                        index !== 0 && {
+                            0: '16px',
+                            xl: '46px',
+                        }
+                    }
+                >
+                    <a href={url}>
+                        <Controls.MenuItem
+                            active={activeUrl.indexOf(url) >= 0}
+                            onClick={() => setActiveUrl(url)}
+                        >
+                            {title}
+                        </Controls.MenuItem>
+                    </a>
+                </Box>
+            ))}
+            <Flex pl="46px" alignItems="center">
+                {userLinks.map(({ url, title }, index) => (
+                    <Fragment key={url}>
+                        {index !== 0 && (
+                            <Box width="1px" as="span" mx="6px" height="13px" bg="gray.2" />
+                        )}
+                        <a href={url}>
+                            <Controls.MenuItem
+                                active={activeUrl.indexOf(url) >= 0}
+                                onClick={() => setActiveUrl(url)}
+                            >
+                                {title}
+                            </Controls.MenuItem>
+                        </a>
+                    </Fragment>
+                ))}
+            </Flex>
+        </Flex>
+    </Flex>
+);
+
+export default HeaderMenu;

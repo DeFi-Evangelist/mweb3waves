@@ -1,0 +1,80 @@
+module.exports = {
+    parser: 'babel-eslint',
+    env: {
+        browser: true,
+        commonjs: true,
+        es6: true,
+    },
+    globals: {
+        page: true,
+        browser: true,
+        __dirname: true,
+        describe: true,
+        beforeAll: true,
+        it: true,
+        afterAll: true,
+        expect: true,
+        jest: true,
+        process: true,
+    },
+    extends: ['airbnb'],
+    parserOptions: {
+        ecmaFeatures: {
+            experimentalObjectRestSpread: true,
+            experimentalDecorators: true,
+            legacyDecorators: true,
+            jsx: true,
+        },
+        sourceType: 'module',
+    },
+    plugins: ['react'],
+    rules: {
+        'implicit-arrow-linebreak': 'off',
+        'import/extensions': 'off',
+        'import/order': [
+            'error',
+            {
+                groups: ['external', 'builtin', 'sibling', 'parent'],
+                'newlines-between': 'always',
+            },
+        ],
+        indent: ['error', 4],
+        'no-multiple-empty-lines': [
+            2,
+            {
+                max: 1,
+            },
+        ],
+        'import/no-extraneous-dependencies': 'off',
+        'import/no-named-as-default': 'off',
+        'import/prefer-default-export': 'off',
+        'jsx-a11y/anchor-is-valid': 'off',
+        'jsx-a11y/label-has-for': 'off',
+        'linebreak-style': ['error', 'unix'],
+        'no-console': 'off',
+        'no-return-await': 'off',
+        'no-unused-expressions': 'off',
+        quotes: ['error', 'single'],
+        'react/jsx-indent': 'off',
+        'react/jsx-indent-props': 'off',
+        'react/jsx-uses-react': 'error',
+        'react/jsx-uses-vars': 'error',
+        'react/jsx-no-bind': [
+            'error',
+            {
+                ignoreRefs: true,
+                allowArrowFunctions: true,
+                allowFunctions: true,
+                allowBind: true,
+            },
+        ],
+        'react/prop-types': 'off',
+        'react/sort-comp': [
+            2,
+            {
+                order: ['static-methods', 'lifecycle', 'render', 'everything-else'],
+            },
+        ],
+        semi: ['error', 'always'],
+    },
+};
