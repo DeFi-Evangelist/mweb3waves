@@ -1,0 +1,88 @@
+import React, { memo } from 'react';
+import styled from 'styled-components';
+import LinesEllipsis from 'react-lines-ellipsis';
+
+import { Rating, Price, Discount } from './coupon-controls';
+
+import { Box, Flex, Text } from '../shared';
+
+const Pointer = styled.div`
+    cursor: pointer;
+`;
+
+const Coupon = ({
+    name,
+    title,
+    image,
+    rating,
+    ratings,
+    longDescription,
+    couponTerm,
+    priceTerm,
+    oldPrice,
+    newPrice,
+    discount,
+    onClick,
+}) => (
+    <Box
+        width="300px"
+        height="300px"
+        bg="gray.0"
+        position="relative"
+        onClick={onClick}
+        as={Pointer}
+    >
+        <Box position="relative">
+            <Box height="117px" style={{ backgroundImage: `url(${image})` }} />
+            {discount !== 0 && (
+                <Box position="absolute" top="20px" right="10px">
+                    <Discount>{`${discount}%`}</Discount>
+                </Box>
+            )}
+        </Box>
+        <Box px="20px" pt="10px">
+            <Rating value={rating}>{`${rating} (${ratings} ratings)`}</Rating>
+            <Text
+                letterSpacing="0.4375px"
+                lineHeight="22px"
+                fontWeight="bold"
+                pt="10px"
+                fontSize="14px"
+            >
+                {name}
+            </Text>
+            <Text lineHeight="18px" fontWeight="200" pt="8px" fontSize="12px">
+                <LinesEllipsis
+                    text={longDescription}
+                    maxLine="2"
+                    ellipsis="..."
+                    trimRight
+                    basedOn="letters"
+                />
+            </Text>
+            <Text lineHeight="18px" fontWeight="normal" pt="8px" fontSize="12px">
+                {title}
+            </Text>
+            <Flex position="absolute" bottom="20px" width="100%" pr="40px">
+                <Text
+                    color="blue.0"
+                    letterSpacing="0.4375px"
+                    lineHeight="22px"
+                    fontWeight="bold"
+                    fontSize="14px"
+                    flex={1}
+                >
+                    {couponTerm}
+                </Text>
+                {oldPrice !== newPrice && (
+                    <Price term={priceTerm} isOld>
+                        {oldPrice}
+                    </Price>
+                )}
+                <Price term={priceTerm}>{newPrice}</Price>
+            </Flex>
+        </Box>
+    </Box>
+);
+
+export default memo(Coupon);
