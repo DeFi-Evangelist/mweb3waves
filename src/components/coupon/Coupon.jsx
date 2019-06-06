@@ -33,15 +33,20 @@ const Coupon = ({
         as={Pointer}
     >
         <Box position="relative">
-            <Box height="117px" style={{ backgroundImage: `url(${image})` }} />
-            {discount !== 0 && (
+            <Box
+                height="117px"
+                style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover' }}
+            />
+            {discount !== undefined && (
                 <Box position="absolute" top="20px" right="10px">
                     <Discount>{`${discount}%`}</Discount>
                 </Box>
             )}
         </Box>
         <Box px="20px" pt="10px">
-            <Rating value={rating}>{`${rating} (${ratings} ratings)`}</Rating>
+            {rating !== undefined && (
+                <Rating value={rating}>{`${rating} (${ratings} ratings)`}</Rating>
+            )}
             <Text
                 letterSpacing="0.4375px"
                 lineHeight="22px"
@@ -84,5 +89,7 @@ const Coupon = ({
         </Box>
     </Box>
 );
+
+Coupon.defaultProps = { priceTerm: '$' };
 
 export default memo(Coupon);

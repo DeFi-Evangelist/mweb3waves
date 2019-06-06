@@ -43,9 +43,14 @@ Container.defaultProps = {
 };
 
 const MobileMenu = ({
-    links, activeUrl, setActiveUrl, userLinks, ...rest
+    links, activeUrl, setActiveUrl, userLinks, onCreateCoupon, ...rest
 }) => (
     <Container {...rest}>
+        <Box pb="12px">
+            <MenuItem active={false} onClick={onCreateCoupon} fontWeight="bold">
+                Add new item
+            </MenuItem>
+        </Box>
         {[links, userLinks].map(linksGroup =>
             linksGroup.map(({ url, title }) => (
                 <a href={url} key={url}>

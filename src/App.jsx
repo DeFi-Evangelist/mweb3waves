@@ -1,33 +1,35 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 
 import { Flex, Modal } from './components/shared';
 import { Coupons, Header } from './containers';
-import { Dialog, Result } from './components/modal';
+import { Dialog, Result, Form } from './components/modal';
+import { useAppDialogs } from './components/service';
+import { getCoupons } from './api';
 
 const App = () => {
-    const [dialogOpened, changeDialogState] = useState(false);
-    const [resultOpened, changeResultState] = useState(false);
-    const [selectedCoupon, selectCoupon] = useState();
+    const {
+        selectedCoupon,
+        dialog: [dialogOpened, onDialogOpen, onDialogClose],
+        result: [resultOpened, onResultOpen, onResultClose],
+        form: [formOpened, onFormOpen, onFormClose],
+    } = useAppDialogs();
 
-    const [onDialogOpen, onDialogClose, onResultOpen, onResultClose] = useMemo(
-        () => [
-            (coupon) => {
-                selectCoupon(coupon);
-                changeDialogState(true);
-            },
-            () => changeDialogState(false),
-            () => changeResultState(true),
-            () => changeResultState(false),
-        ],
-        [],
-    );
+    const [coupons, updateCoupons] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await getCoupons();
+            updateCoupons(response);
+        }
+        fetchData();
+    }, []);
 
     return (
         <>
-            <Header />
+            <Header onCreateCoupon={onFormOpen} />
             <Flex justifyContent="center" p="20px" flexWrap="wrap">
-                <Coupons onDialogOpen={onDialogOpen} />
+                <Coupons onDialogOpen={onDialogOpen} coupons={coupons} />
             </Flex>
             <Modal open={dialogOpened} onClose={onDialogClose}>
                 <Dialog
@@ -41,6 +43,15 @@ const App = () => {
             </Modal>
             <Modal open={resultOpened} onClose={onResultClose}>
                 <Result onClose={onResultClose} />
+            </Modal>
+            <Modal open={formOpened} onClose={onFormClose}>
+                <Form
+                    onClose={onFormClose}
+                    onSubmit={(data) => {
+                        updateCoupons([...coupons, { ...data, id: new Date().valueOf() }]);
+                        onFormClose();
+                    }}
+                />
             </Modal>
         </>
     );

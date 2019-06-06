@@ -10,6 +10,7 @@ interface HeaderMenuProps {
   userLinks: Link[];
   activeUrl: string;
   setActiveUrl: (val: string) => void;
+  onCreateCoupon: () => void;
 }
 
 export declare const HeaderMenu: FunctionComponent<HeaderMenuProps>;

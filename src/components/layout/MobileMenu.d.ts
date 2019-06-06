@@ -10,6 +10,7 @@ interface MobileMenuProps {
   userLinks: Link[];
   activeUrl: string;
   setActiveUrl: (val: string) => void;
+  onCreateCoupon: () => void;
 }
 
 export declare const MobileMenu: FunctionComponent<MobileMenuProps>;
