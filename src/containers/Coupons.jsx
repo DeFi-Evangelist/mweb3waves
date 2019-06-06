@@ -14,7 +14,7 @@ const Card = styled(Box)`
 
 const Coupons = ({ onDialogOpen, coupons }) =>
     coupons.map(coupon => (
-        <Box key={coupon.id} p="20px">
+        <Box key={coupon.id} p="20px" width={{ 0: '100%', md: 'initial' }}>
             <Box as={Card}>
                 <Coupon
                     width={{ 0: '100%', md: '300px' }}

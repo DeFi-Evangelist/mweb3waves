@@ -11,6 +11,8 @@ interface MobileMenuProps {
   activeUrl: string;
   setActiveUrl: (val: string) => void;
   onCreateCoupon: () => void;
+  filterActive: boolean;
+  onChangeFilterState: (val: boolean) => void;
 }
 
 export declare const MobileMenu: FunctionComponent<MobileMenuProps>;

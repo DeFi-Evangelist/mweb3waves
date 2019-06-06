@@ -42,7 +42,7 @@ const mobileMenuSize = {
     md: '85px',
 };
 
-const Header = ({ onCreateCoupon }) => {
+const Header = ({ onCreateCoupon, filterActive, onChangeFilterState }) => {
     const [activeUrl, setActiveUrl] = useState('');
     const [isMobile, setMobileState] = useState(false);
     const [isMenuActive, setMenuState] = useState(false);
@@ -77,14 +77,13 @@ const Header = ({ onCreateCoupon }) => {
             setMenuState(false);
             onCreateCoupon();
         },
+        filterActive,
+        onChangeFilterState,
     };
 
     return (
         <>
-            <Controls.HeaderLayout
-                height={isMobile ? mobileMenuSize : '131px'}
-                position="fixed"
-            >
+            <Controls.HeaderLayout height={isMobile ? mobileMenuSize : '131px'} position="fixed">
                 <Flex
                     alignItems="center"
                     height="100%"
@@ -106,8 +105,26 @@ const Header = ({ onCreateCoupon }) => {
                             bg="blue.0"
                         />
                     )}
-                    <Controls.Logo flex={1} justifyContent={isMobile && 'center'} />
+                    <Controls.Logo
+                        flex={1}
+                        justifyContent={isMobile && 'center'}
+                        isActive={!filterActive}
+                        onClick={() => onChangeFilterState(false)}
+                    />
                     {!isMobile && <Layout.HeaderMenu {...menuParams} />}
+                    {isMobile && (
+                        <>
+                            <Flex position="absolute" top="10px" right="10px">
+                                <Controls.SearchIcon isActive={false} />
+                                <Box pl="6px">
+                                    <Controls.ShopIcon
+                                        isActive={filterActive}
+                                        onClick={() => onChangeFilterState(true)}
+                                    />
+                                </Box>
+                            </Flex>
+                        </>
+                    )}
                 </Flex>
             </Controls.HeaderLayout>
             <Box width="100%" height={isMobile ? mobileMenuSize : '131px'} />

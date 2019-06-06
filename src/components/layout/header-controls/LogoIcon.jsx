@@ -1,7 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const LogoIcon = () => (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+import { logoColor } from './iconColor';
+
+const LogoIcon = ({ isActive, ...rest }) => (
+    <svg
+        width="48"
+        height="48"
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        {...rest}
+    >
         <g id="Logo_coupon">
             <rect id="Rectangle" width="48" height="48" rx="12" fill="#2EB4FF" />
             <path
@@ -24,4 +34,6 @@ const LogoIcon = () => (
     </svg>
 );
 
-export default LogoIcon;
+export default styled(LogoIcon)`
+    ${logoColor}
+`;

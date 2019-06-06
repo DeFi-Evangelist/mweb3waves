@@ -1,13 +1,16 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const SearchIcon = props => (
+import { iconColor } from './iconColor';
+
+const SearchIcon = ({ isActive, ...rest }) => (
     <svg
         width="18"
         height="18"
         viewBox="0 0 54 54"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
+        {...rest}
     >
         <g id="search_icon">
             <path
@@ -21,4 +24,6 @@ const SearchIcon = props => (
     </svg>
 );
 
-export default SearchIcon;
+export default styled(SearchIcon)`
+    ${iconColor}
+`;

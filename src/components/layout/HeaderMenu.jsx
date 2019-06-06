@@ -10,13 +10,22 @@ const menuIndent = {
 };
 
 const HeaderMenu = ({
-    links, activeUrl, setActiveUrl, userLinks, onCreateCoupon,
+    links,
+    activeUrl,
+    setActiveUrl,
+    userLinks,
+    onCreateCoupon,
+    filterActive,
+    onChangeFilterState,
 }) => (
     <Flex justifyContent="right" alignItems="center" flexDirection="column">
         <Flex width="100%" justifyContent="flex-end" pb="20px">
-            <Controls.SearchIcon />
+            <Controls.SearchIcon isActive={false} />
             <Box pl="15px">
-                <Controls.ShopIcon />
+                <Controls.ShopIcon
+                    isActive={filterActive}
+                    onClick={() => onChangeFilterState(true)}
+                />
             </Box>
         </Flex>
         <Flex>

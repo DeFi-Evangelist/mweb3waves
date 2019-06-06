@@ -16,18 +16,26 @@ const App = () => {
     } = useAppDialogs();
 
     const [coupons, updateCoupons] = useState([]);
+    const [userCoupons, updateUserCoupons] = useState([]);
+    const [filterActive, changeFilterState] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
             const response = await getCoupons();
             updateCoupons(response);
+
+            updateUserCoupons([response[0]]);
         }
         fetchData();
     }, []);
 
     return (
         <>
-            <Header onCreateCoupon={onFormOpen} />
+            <Header
+                onCreateCoupon={onFormOpen}
+                filterActive={filterActive}
+                onChangeFilterState={changeFilterState}
+            />
             <Flex
                 justifyContent="center"
                 p={{
@@ -36,7 +44,10 @@ const App = () => {
                 }}
                 flexWrap="wrap"
             >
-                <Coupons onDialogOpen={onDialogOpen} coupons={coupons} />
+                <Coupons
+                    onDialogOpen={onDialogOpen}
+                    coupons={filterActive ? userCoupons : coupons}
+                />
             </Flex>
             <Modal open={dialogOpened} onClose={onDialogClose}>
                 <Dialog
@@ -63,8 +74,11 @@ const App = () => {
                 <Form
                     onClose={onFormClose}
                     onSubmit={(data) => {
-                        updateCoupons([...coupons, { ...data, id: new Date().valueOf() }]);
+                        const fn = filterActive ? updateUserCoupons : updateCoupons;
+                        const entity = filterActive ? userCoupons : coupons;
+                        fn([...entity, { ...data, id: new Date().valueOf() }]);
                         onFormClose();
+                        onResultOpen();
                     }}
                 />
             </Modal>
