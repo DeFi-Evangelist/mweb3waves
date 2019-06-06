@@ -4,9 +4,9 @@ import { fontWeight } from 'styled-system';
 
 import { Box } from '../../shared';
 
-const MenuItemStyled = styled(Box).attrs(({ active }) => ({
+const MenuItemStyled = styled(Box).attrs(({ active, color }) => ({
     as: 'span',
-    color: active ? 'blue.0' : 'gray.2',
+    color: active ? 'blue.0' : color || 'gray.2',
 }))`
     letter-spacing: 0.65625px;
     font-size: 14px;

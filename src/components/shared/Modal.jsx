@@ -38,7 +38,9 @@ const Container = styled(Box)`
     }
 `;
 
-const Modal = ({ children, open, onClose }) =>
+const Modal = ({
+    children, open, onClose, ...rest
+}) =>
     ReactDOM.createPortal(
         <>
             <CSSTransition
@@ -47,7 +49,7 @@ const Modal = ({ children, open, onClose }) =>
                 classNames="modal"
                 unmountOnExit
             >
-                <Container>{children}</Container>
+                <Container {...rest}>{children}</Container>
             </CSSTransition>
             <CSSTransition
                 in={open}

@@ -27,21 +27,9 @@ const links = [
         url: '#goods',
         title: 'Goods',
     },
-    {
-        url: '#coupons',
-        title: 'Coupons',
-    },
-    {
-        url: '#contacts',
-        title: 'Contacts',
-    },
 ];
 
 const userLinks = [
-    {
-        url: '#registration',
-        title: 'Registration',
-    },
     {
         url: '#login',
         title: 'Login',
@@ -103,8 +91,12 @@ const Header = ({ onCreateCoupon }) => {
                 <Flex
                     alignItems="center"
                     height="100%"
-                    px={{
-                        0: '2%',
+                    pl={{
+                        0: '16px',
+                        xl: '114px',
+                    }}
+                    pr={{
+                        0: '3%',
                         xl: '114px',
                     }}
                 >

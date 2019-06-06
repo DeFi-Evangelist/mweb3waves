@@ -28,7 +28,14 @@ const App = () => {
     return (
         <>
             <Header onCreateCoupon={onFormOpen} />
-            <Flex justifyContent="center" p="20px" flexWrap="wrap">
+            <Flex
+                justifyContent="center"
+                p={{
+                    0: '10px',
+                    md: '20px',
+                }}
+                flexWrap="wrap"
+            >
                 <Coupons onDialogOpen={onDialogOpen} coupons={coupons} />
             </Flex>
             <Modal open={dialogOpened} onClose={onDialogClose}>
@@ -44,7 +51,15 @@ const App = () => {
             <Modal open={resultOpened} onClose={onResultClose}>
                 <Result onClose={onResultClose} />
             </Modal>
-            <Modal open={formOpened} onClose={onFormClose}>
+            <Modal
+                open={formOpened}
+                onClose={onFormClose}
+                width={{
+                    0: '100%',
+                    lg: 'initial',
+                }}
+                mx="10px"
+            >
                 <Form
                     onClose={onFormClose}
                     onSubmit={(data) => {
