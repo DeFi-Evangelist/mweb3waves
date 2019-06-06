@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-import styled from 'styled-components';
 import LinesEllipsis from 'react-lines-ellipsis';
 import memoizeOne from 'memoize-one';
 
@@ -8,14 +7,6 @@ import { Rating, Price, Discount } from './coupon-controls';
 import { Box, Flex, Text } from '../shared';
 
 const isEmpty = memoizeOne(val => val === undefined || val === 0);
-
-const Card = styled.div`
-    cursor: pointer;
-    transition: box-shadow linear 200ms;
-    &:hover {
-        box-shadow: 1px 2px 5px rgba(0,0,0,.5);
-    }
-`;
 
 const Coupon = ({
     name,
@@ -30,15 +21,9 @@ const Coupon = ({
     newPrice,
     discount,
     onClick,
+    ...rest
 }) => (
-    <Box
-        width="300px"
-        height="300px"
-        bg="gray.0"
-        position="relative"
-        onClick={onClick}
-        as={Card}
-    >
+    <Box bg="gray.0" width="300px" height="300px" position="relative" onClick={onClick} {...rest}>
         <Box position="relative">
             <Box
                 height="117px"

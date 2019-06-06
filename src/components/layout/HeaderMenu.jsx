@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
 
 import * as Controls from './header-controls';
 
@@ -35,7 +34,7 @@ const HeaderMenu = ({
             ))}
 
             <Box as="span" pl={menuIndent}>
-                <Controls.MenuItem active={false} onClick={onCreateCoupon}>
+                <Controls.MenuItem active={false} onClick={onCreateCoupon} color="blue.0">
                     Add new item
                 </Controls.MenuItem>
             </Box>
