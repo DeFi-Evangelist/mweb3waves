@@ -1,10 +1,13 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
 import LinesEllipsis from 'react-lines-ellipsis';
+import memoizeOne from 'memoize-one';
 
 import { Rating, Price, Discount } from './coupon-controls';
 
 import { Box, Flex, Text } from '../shared';
+
+const isEmpty = memoizeOne(val => val === undefined || val === 0);
 
 const Pointer = styled.div`
     cursor: pointer;
@@ -37,16 +40,14 @@ const Coupon = ({
                 height="117px"
                 style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover' }}
             />
-            {discount !== undefined && (
+            {!isEmpty(discount) && (
                 <Box position="absolute" top="20px" right="10px">
                     <Discount>{`${discount}%`}</Discount>
                 </Box>
             )}
         </Box>
         <Box px="20px" pt="10px">
-            {rating !== undefined && (
-                <Rating value={rating}>{`${rating} (${ratings} ratings)`}</Rating>
-            )}
+            {!isEmpty(rating) && <Rating value={rating}>{`${rating} (${ratings} ratings)`}</Rating>}
             <Text
                 letterSpacing="0.4375px"
                 lineHeight="22px"
