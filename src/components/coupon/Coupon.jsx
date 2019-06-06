@@ -21,6 +21,7 @@ const Coupon = ({
     newPrice,
     discount,
     onClick,
+    couponPrice,
     ...rest
 }) => (
     <Box bg="gray.0" width="300px" height="300px" position="relative" onClick={onClick} {...rest}>
@@ -67,7 +68,7 @@ const Coupon = ({
                     fontSize="14px"
                     flex={1}
                 >
-                    {couponTerm}
+                    {`${couponPrice} ${couponTerm}`}
                 </Text>
                 {oldPrice !== newPrice && (
                     <Price term={priceTerm} isOld>

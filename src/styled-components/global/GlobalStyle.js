@@ -44,4 +44,7 @@ export default createGlobalStyle`
         }
         font: inherit;
     }
+    textarea {
+        resize: none;
+    }
 `;

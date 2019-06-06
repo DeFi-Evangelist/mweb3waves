@@ -83,10 +83,7 @@ const Header = ({ onCreateCoupon }) => {
         <>
             <Controls.HeaderLayout
                 height={isMobile ? mobileMenuSize : '131px'}
-                position={{
-                    0: 'fixed',
-                    lg: 'relative',
-                }}
+                position="fixed"
             >
                 <Flex
                     alignItems="center"
@@ -113,9 +110,9 @@ const Header = ({ onCreateCoupon }) => {
                     {!isMobile && <Layout.HeaderMenu {...menuParams} />}
                 </Flex>
             </Controls.HeaderLayout>
+            <Box width="100%" height={isMobile ? mobileMenuSize : '131px'} />
             {isMobile && (
                 <>
-                    <Box width="100%" height={mobileMenuSize} />
                     <CSSTransition
                         in={isMenuActive}
                         timeout={Layout.MENU_ANIMATION_TIMEOUT}
