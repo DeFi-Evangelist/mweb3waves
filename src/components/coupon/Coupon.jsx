@@ -9,8 +9,12 @@ import { Box, Flex, Text } from '../shared';
 
 const isEmpty = memoizeOne(val => val === undefined || val === 0);
 
-const Pointer = styled.div`
+const Card = styled.div`
     cursor: pointer;
+    transition: box-shadow linear 200ms;
+    &:hover {
+        box-shadow: 1px 2px 5px rgba(0,0,0,.5);
+    }
 `;
 
 const Coupon = ({
@@ -33,7 +37,7 @@ const Coupon = ({
         bg="gray.0"
         position="relative"
         onClick={onClick}
-        as={Pointer}
+        as={Card}
     >
         <Box position="relative">
             <Box
