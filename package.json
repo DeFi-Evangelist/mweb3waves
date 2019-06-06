@@ -1,6 +1,6 @@
 {
     "name": "mweb3-demo-waves",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "scripts": {
         "start": "webpack-dev-server --content-base public --debug --output-pathinfo --watch-poll --hot --inline --host 0.0.0.0 --port 4001 --mode development",
         "build": "NODE_ENV=production webpack -p --mode production",
