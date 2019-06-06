@@ -7,13 +7,14 @@
         "server": "node server.js"
     },
     "dependencies": {
+        "express": "^4.16.4",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
+        "react-hook-form": "^3.9.0",
         "react-lines-ellipsis": "^0.14.1",
         "react-transition-group": "^4.0.0",
-        "express": "^4.16.4",
-        "styled-system": "^4.1.0",
-        "styled-components": "^4.2.0"
+        "styled-components": "^4.2.0",
+        "styled-system": "^4.1.0"
     },
     "devDependencies": {
         "@babel/core": "^7.4.3",

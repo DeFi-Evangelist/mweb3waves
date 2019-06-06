@@ -1,11 +1,17 @@
 import React, { Fragment } from 'react';
+import styled from 'styled-components';
 
 import * as Controls from './header-controls';
 
 import { Flex, Box } from '../shared';
 
+const menuIndent = {
+    0: '16px',
+    xl: '46px',
+};
+
 const HeaderMenu = ({
-    links, activeUrl, setActiveUrl, userLinks,
+    links, activeUrl, setActiveUrl, userLinks, onCreateCoupon,
 }) => (
     <Flex justifyContent="right" alignItems="center" flexDirection="column">
         <Flex width="100%" justifyContent="flex-end" pb="20px">
@@ -16,16 +22,7 @@ const HeaderMenu = ({
         </Flex>
         <Flex>
             {links.map(({ url, title }, index) => (
-                <Box
-                    key={url}
-                    as="span"
-                    pl={
-                        index !== 0 && {
-                            0: '16px',
-                            xl: '46px',
-                        }
-                    }
-                >
+                <Box key={url} as="span" pl={index !== 0 && menuIndent}>
                     <a href={url}>
                         <Controls.MenuItem
                             active={activeUrl.indexOf(url) >= 0}
@@ -36,6 +33,13 @@ const HeaderMenu = ({
                     </a>
                 </Box>
             ))}
+
+            <Box as="span" pl={menuIndent}>
+                <Controls.MenuItem active={false} onClick={onCreateCoupon}>
+                    Add new item
+                </Controls.MenuItem>
+            </Box>
+
             <Flex pl="46px" alignItems="center">
                 {userLinks.map(({ url, title }, index) => (
                     <Fragment key={url}>

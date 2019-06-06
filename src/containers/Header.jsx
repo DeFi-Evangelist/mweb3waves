@@ -54,7 +54,7 @@ const mobileMenuSize = {
     md: '85px',
 };
 
-const Header = () => {
+const Header = ({ onCreateCoupon }) => {
     const [activeUrl, setActiveUrl] = useState('');
     const [isMobile, setMobileState] = useState(false);
     const [isMenuActive, setMenuState] = useState(false);
@@ -85,6 +85,10 @@ const Header = () => {
         links,
         userLinks,
         setActiveUrl,
+        onCreateCoupon: () => {
+            setMenuState(false);
+            onCreateCoupon();
+        },
     };
 
     return (
