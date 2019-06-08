@@ -27,7 +27,7 @@ const Dialog = ({ coupon, onClose, onSubmit }) => (
         <Controls.Footer>
             <Controls.Button onClick={onClose}>Cancel</Controls.Button>
             <Controls.Button color="blue.0" onClick={onSubmit}>
-                Submit
+                Buy
             </Controls.Button>
         </Controls.Footer>
     </Box>
