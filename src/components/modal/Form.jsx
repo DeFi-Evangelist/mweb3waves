@@ -151,7 +151,7 @@ const Form = ({ onClose, onSubmit }) => {
             <Controls.Footer>
                 <Controls.Button onClick={onClose}>Cancel</Controls.Button>
                 <Controls.Button color="blue.0" type="submit">
-                    Submit
+                    Add item
                 </Controls.Button>
             </Controls.Footer>
         </Box>
