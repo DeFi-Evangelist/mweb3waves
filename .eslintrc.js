@@ -52,6 +52,7 @@ module.exports = {
         'jsx-a11y/label-has-for': 'off',
         'linebreak-style': ['error', 'unix'],
         'no-console': 'off',
+        'no-param-reassign': 'off',
         'no-return-await': 'off',
         'no-unused-expressions': 'off',
         quotes: ['error', 'single'],

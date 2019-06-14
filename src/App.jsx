@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 
 import { Flex, Modal } from './components/shared';
-import { Coupons, Header } from './containers';
+import { Coupons, Header, Footer } from './containers';
 import { Dialog, Result, Form } from './components/modal';
 import { useAppDialogs } from './components/service';
 import { getCoupons } from './api';
@@ -82,6 +82,7 @@ const App = () => {
                     }}
                 />
             </Modal>
+            <Footer />
         </>
     );
 };

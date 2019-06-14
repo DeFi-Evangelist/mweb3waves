@@ -1,158 +1,97 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+    useEffect, useState, memo, useCallback,
+} from 'react';
+import MediaQuery from 'react-responsive';
+import { useSelector } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 
 import { Flex, Box } from '../components/shared';
 import * as Controls from '../components/layout/header-controls';
 import * as Layout from '../components/layout';
 import theme from '../styled-components/theme';
+import * as LINKS from '../components/layout/links';
+import { useDispatchedActions } from '../components/service';
+import * as rootActions from '../reducers/root';
 
-const links = [
-    {
-        url: '#featured',
-        title: 'Featured',
-    },
-    {
-        url: '#things_to_do',
-        title: 'Things to do',
-    },
-    {
-        url: '#beauty_spas',
-        title: 'Beauty & Spas',
-    },
-    {
-        url: '#local',
-        title: 'Local',
-    },
-    {
-        url: '#goods',
-        title: 'Goods',
-    },
-];
+const { breakpoints } = theme;
 
-const userLinks = [
-    {
-        url: '#login',
-        title: 'Login',
-    },
-];
-
-const mobileWidth = parseInt(theme.breakpoints.lg.replace('px', ''), 10);
-const mobileMenuSize = {
-    0: '70px',
-    md: '85px',
+const menuHeight = {
+    0: '114px',
+    sm: '131px',
 };
 
-const Header = ({ onCreateCoupon, filterActive, onChangeFilterState }) => {
+const mapStateToProps = state => ({
+    isOpen: state.root.modalMenuOpen,
+});
+
+const Header = () => {
     const [activeUrl, setActiveUrl] = useState('');
-    const [isMobile, setMobileState] = useState(false);
-    const [isMenuActive, setMenuState] = useState(false);
 
     useEffect(() => {
         setActiveUrl(window.location.href);
     }, []);
 
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth < mobileWidth) {
-                !isMobile && setMobileState(true);
-            } else {
-                isMobile && setMobileState(false);
-            }
-        };
+    const { isOpen } = useSelector(mapStateToProps);
+    const { changeMobileMenuState } = useDispatchedActions(rootActions);
 
-        window.addEventListener('resize', handleResize);
-        handleResize();
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, [isMobile]);
-
-    const menuParams = {
-        activeUrl,
-        links,
-        userLinks,
-        setActiveUrl,
-        onCreateCoupon: () => {
-            setMenuState(false);
-            onCreateCoupon();
-        },
-        filterActive,
-        onChangeFilterState,
-    };
+    const onCloseMenu = useCallback(() => changeMobileMenuState(false));
 
     return (
         <>
-            <Controls.HeaderLayout height={isMobile ? mobileMenuSize : '131px'} position="fixed">
+            <Controls.HeaderLayout height={menuHeight} position="fixed">
                 <Flex
-                    alignItems="center"
+                    alignItems={{
+                        0: 'flex-start',
+                        sm: 'center',
+                    }}
                     height="100%"
-                    pl={{
-                        0: '16px',
+                    px={{
+                        0: '20px',
+                        lg: '39px',
                         xl: '114px',
                     }}
-                    pr={{
-                        0: '3%',
-                        xl: '114px',
+                    pt={{
+                        0: '14px',
+                        sm: '0px',
+                    }}
+                    flexDirection={{
+                        0: 'column',
+                        sm: 'row',
                     }}
                 >
-                    {isMobile && (
-                        <Layout.Hamburger
-                            isActive={isMenuActive}
-                            onClick={() => setMenuState(!isMenuActive)}
-                            bottom="6px"
-                            position="relative"
-                            bg="blue.0"
+                    <Flex width="100%" justifyContent="center">
+                        <Layout.HeaderLine
+                            activeUrl={activeUrl}
+                            links={LINKS.headerLinks}
+                            userLinks={LINKS.userLinks}
+                            setActiveUrl={setActiveUrl}
+                            changeMobileMenuState={changeMobileMenuState}
+                            tabletResolution={breakpoints.lg}
+                            mobileResolution={breakpoints.sm}
+                            menuOpened={isOpen}
                         />
-                    )}
-                    <Controls.Logo
-                        flex={1}
-                        justifyContent={isMobile && 'center'}
-                        isActive={!filterActive}
-                        onClick={() => onChangeFilterState(false)}
-                    />
-                    {!isMobile && <Layout.HeaderMenu {...menuParams} />}
-                    {isMobile && (
-                        <>
-                            <Flex position="absolute" top="10px" right="10px">
-                                <Controls.SearchIcon isActive={false} />
-                                <Box pl="6px">
-                                    <Controls.ShopIcon
-                                        isActive={filterActive}
-                                        onClick={() => onChangeFilterState(true)}
-                                    />
-                                </Box>
+                    </Flex>
+                    <MediaQuery maxWidth={breakpoints.sm}>
+                        <Flex width="100%" pt="10px">
+                            <Controls.Logo isActive size="small" />
+                            <Flex flex={1} justifyContent="flex-end" alignItems="center">
+                                <Controls.SearchIcon />
                             </Flex>
-                        </>
-                    )}
+                        </Flex>
+                    </MediaQuery>
                 </Flex>
             </Controls.HeaderLayout>
-            <Box width="100%" height={isMobile ? mobileMenuSize : '131px'} />
-            {isMobile && (
-                <>
-                    <CSSTransition
-                        in={isMenuActive}
-                        timeout={Layout.MENU_ANIMATION_TIMEOUT}
-                        classNames={Layout.MENU_ANIMATION_NAME}
-                        unmountOnExit
-                    >
-                        <Layout.MobileMenu position="fixed" top={mobileMenuSize} {...menuParams} />
-                    </CSSTransition>
-                    <CSSTransition
-                        in={isMenuActive}
-                        timeout={Layout.OVERLAY_ANIMATION_TIMEOUT}
-                        classNames={Layout.OVERLAY_ANIMATION_NAME}
-                        unmountOnExit
-                    >
-                        <Layout.Overlay
-                            onClick={() => setMenuState(!isMenuActive)}
-                            top={mobileMenuSize}
-                        />
-                    </CSSTransition>
-                </>
-            )}
+            <Box width="100%" height={menuHeight} />
+            <MediaQuery maxWidth={breakpoints.lg}>
+                <CSSTransition unmountOnExit {...Layout.menuAnimation} in={isOpen}>
+                    <Layout.MobileMenu top="0px" onClose={onCloseMenu} position="fixed" />
+                </CSSTransition>
+                <CSSTransition unmountOnExit {...Layout.overlayAnimation} in={isOpen}>
+                    <Layout.Overlay onClick={onCloseMenu} top="0px" />
+                </CSSTransition>
+            </MediaQuery>
         </>
     );
 };
 
-export default Header;
+export default memo(Header);

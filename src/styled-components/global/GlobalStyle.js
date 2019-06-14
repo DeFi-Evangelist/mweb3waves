@@ -6,7 +6,7 @@ export default createGlobalStyle`
         font-family: 'Montserrat', sans-serif;
         padding: 0;
         margin: 0;
-        background-color: ${({ theme: { colors } }) => colors.gray[1]}
+        background-color: ${({ theme: { colors } }) => colors.gray[1]};
    }
 
    a {

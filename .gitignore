@@ -1,3 +1,4 @@
 package-lock.json
-public
+public/build
+public/index.html
 node_modules
