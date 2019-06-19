@@ -1,16 +1,15 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-import { Box } from '../shared';
+import { Box, Flex } from '../shared';
 
-const DEFAULT_WIDTH = 18;
 const DEFAULT_BACKGROUND = '#000';
 
 const LineMenu = styled(Box).attrs({
     as: 'span',
 })`
     height: 2px;
-    position: absolute;
+    margin-bottom: 6px;
     left: 0;
     transition: all linear 350ms;
 `;
@@ -20,23 +19,13 @@ const HamburgerStyled = styled(Box).attrs({
 })`
     z-index: 1;
     cursor: pointer;
-    & > div {
-        position: relative;
-        &:before {
-            width: 60px;
-            height: 60px;
-            position: absolute;
-            left: -20px;
-            top: -20px;
-            content: ' ';
-        }
-    }
+    position: relative;
     ${({ isActive }) =>
         isActive
         && css`
             ${LineMenu} {
                 opacity: 0;
-
+                width: 20px;
                 &:first-child,
                 &:last-child {
                     opacity: 1;
@@ -53,19 +42,19 @@ const HamburgerStyled = styled(Box).attrs({
 `;
 
 const Hamburger = ({
-    onClick,
-    width = DEFAULT_WIDTH,
-    bg = DEFAULT_BACKGROUND,
-    isActive,
-    ...rest
+    onClick, bg, isActive, ...rest
 }) => (
     <HamburgerStyled onClick={onClick} isActive={isActive} {...rest}>
-        <div>
-            <LineMenu top="0px" width={`${width}px`} bg={bg} />
-            <LineMenu top="5px" width={`${width}px`} bg={bg} />
-            <LineMenu top="10px" width={`${width}px`} bg={bg} />
-        </div>
+        <Flex flexDirection="column">
+            <LineMenu top="0px" width="15px" bg={bg} />
+            <LineMenu top="8px" width="27px" bg={bg} />
+            <LineMenu top="16px" width="38px" bg={bg} />
+        </Flex>
     </HamburgerStyled>
 );
+
+Hamburger.defaultProps = {
+    bg: DEFAULT_BACKGROUND,
+};
 
 export default Hamburger;

@@ -2,8 +2,10 @@ import styled from 'styled-components';
 
 import { Box } from '../shared';
 
-export const OVERLAY_ANIMATION_NAME = 'overlay';
-export const OVERLAY_ANIMATION_TIMEOUT = 350;
+export const overlayAnimation = {
+    classNames: 'overlay',
+    timeout: 350,
+};
 
 const Overlay = styled(Box).attrs({
     bg: 'rgba(0,0,0,.5)',
@@ -13,20 +15,20 @@ const Overlay = styled(Box).attrs({
     right: '0px',
     zIndex: 9,
 })`
-    &.${OVERLAY_ANIMATION_NAME}-enter {
+    &.${overlayAnimation.classNames}-enter {
         opacity: 0;
     }
-    &.${OVERLAY_ANIMATION_NAME}-enter-active {
+    &.${overlayAnimation.classNames}-enter-active {
         opacity: 1;
-        transition: opacity ${OVERLAY_ANIMATION_TIMEOUT}ms ease-out;
+        transition: opacity ${overlayAnimation.timeout}ms ease-out;
     }
 
-    &.${OVERLAY_ANIMATION_NAME}-exit {
+    &.${overlayAnimation.classNames}-exit {
         opacity: 1;
     }
-    &.${OVERLAY_ANIMATION_NAME}-exit-active {
+    &.${overlayAnimation.classNames}-exit-active {
         opacity: 0;
-        transition: opacity ${OVERLAY_ANIMATION_TIMEOUT}ms ease-out;
+        transition: opacity ${overlayAnimation.timeout}ms ease-out;
     }
 `;
 

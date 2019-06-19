@@ -5,7 +5,9 @@ import ReactDOM from 'react-dom';
 
 import Box from './Box';
 
-import { OVERLAY_ANIMATION_NAME, OVERLAY_ANIMATION_TIMEOUT, Overlay } from '../layout';
+import { overlayAnimation, Overlay } from '../layout';
+
+const { timeout } = overlayAnimation;
 
 const modalContainer = document.getElementById('modal');
 
@@ -24,7 +26,7 @@ const Container = styled(Box)`
     &.modal-enter-active {
         transform: translate(-50%, 0);
         opacity: 1;
-        transition: all ${OVERLAY_ANIMATION_TIMEOUT}ms ease-out;
+        transition: all ${timeout}ms ease-out;
     }
 
     &.modal-exit {
@@ -34,7 +36,7 @@ const Container = styled(Box)`
     &.modal-exit-active {
         transform: translate(-50%, -50%);
         opacity: 0;
-        transition: all ${OVERLAY_ANIMATION_TIMEOUT}ms ease-out;
+        transition: all ${timeout}ms ease-out;
     }
 `;
 
@@ -43,20 +45,10 @@ const Modal = ({
 }) =>
     ReactDOM.createPortal(
         <>
-            <CSSTransition
-                in={open}
-                timeout={OVERLAY_ANIMATION_TIMEOUT}
-                classNames="modal"
-                unmountOnExit
-            >
+            <CSSTransition in={open} timeout={timeout} classNames="modal" unmountOnExit>
                 <Container {...rest}>{children}</Container>
             </CSSTransition>
-            <CSSTransition
-                in={open}
-                timeout={OVERLAY_ANIMATION_TIMEOUT}
-                classNames={OVERLAY_ANIMATION_NAME}
-                unmountOnExit
-            >
+            <CSSTransition in={open} {...overlayAnimation} unmountOnExit>
                 <Overlay top="0px" onClick={onClose} />
             </CSSTransition>
         </>,

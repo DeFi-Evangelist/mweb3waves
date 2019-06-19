@@ -5,6 +5,6 @@ import rootSaga from '../sagas';
 
 export default () =>
     configureStore({
-        rootReducer,
+        rootReducer: rootReducer(),
         rootSaga,
     });

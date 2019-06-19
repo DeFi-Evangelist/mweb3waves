@@ -1,35 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import { MenuItem } from './header-controls';
+import * as Controls from './header-controls';
+import * as LINKS from './links';
+import LogoCopyright from './LogoCopyright';
+import SocialButtons from './SocialButtons';
 
-import { Box } from '../shared';
+import { Box, Flex, Text } from '../shared';
 
-export const MENU_ANIMATION_NAME = 'mobile-menu';
-export const MENU_ANIMATION_TIMEOUT = 350;
+export const menuAnimation = {
+    classNames: 'mobile-menu',
+    timeout: 350,
+};
 
 const Container = styled(Box)`
     left: 0px;
     z-index: 10;
-    padding: 16px;
-    &.${MENU_ANIMATION_NAME}-enter {
-        transform: translateY(-300px);
+    padding: 20px;
+    overflow-y: auto;
+    svg {
+        cursor: pointer;
+    }
+    &.${menuAnimation.classNames}-enter {
+        transform: translateX(-600px);
         opacity: 0;
     }
-    &.${MENU_ANIMATION_NAME}-enter-active {
-        transform: translateY(0px);
+    &.${menuAnimation.classNames}-enter-active {
+        transform: translateX(0px);
         opacity: 1;
-        transition: all ${MENU_ANIMATION_TIMEOUT}ms ease-out;
+        transition: all ${menuAnimation.timeout}ms ease-out;
     }
 
-    &.${MENU_ANIMATION_NAME}-exit {
-        transform: translateY(0px);
+    &.${menuAnimation.classNames}-exit {
+        transform: translateX(0px);
         opacity: 1;
     }
-    &.${MENU_ANIMATION_NAME}-exit-active {
-        transform: translateY(-300px);
+    &.${menuAnimation.classNames}-exit-active {
+        transform: translateX(-600px);
         opacity: 0;
-        transition: all ${MENU_ANIMATION_TIMEOUT}ms ease-out;
+        transition: all ${menuAnimation.timeout}ms ease-out;
     }
 `;
 
@@ -37,31 +46,57 @@ Container.defaultProps = {
     bg: 'gray.0',
     position: 'relative',
     width: '100%',
+    height: '100%',
 };
 
-const MobileMenu = ({
-    links, activeUrl, setActiveUrl, userLinks, onCreateCoupon, ...rest
-}) => (
-    <Container {...rest}>
-        <Box pb="24px">
-            <MenuItem active={false} onClick={onCreateCoupon} fontWeight="bold" color="blue.0">
-                Add new item
-            </MenuItem>
-        </Box>
-        {[links, userLinks].map(linksGroup =>
-            linksGroup.map(({ url, title }) => (
-                <a href={url} key={url}>
-                    <Box pb="24px">
-                        <MenuItem
-                            active={activeUrl.indexOf(url) >= 0}
-                            onClick={() => setActiveUrl(url)}
-                        >
-                            {title}
-                        </MenuItem>
-                    </Box>
+const textProps = {
+    fontSize: '14px',
+    lineHeight: '17px',
+    fontWeight: '600',
+};
+
+const GroupLinks = ({ title, links, ...rest }) => (
+    <Box {...rest}>
+        {title && (
+            <Text letterSpacing="0.65625px" {...textProps} pb="17px">
+                {title}
+            </Text>
+        )}
+        <Box>
+            {links.map(({ title: linkTitle, url }) => (
+                <a key={url} href={url}>
+                    <Text color="blue.0" {...textProps} pb="17px">
+                        {linkTitle}
+                    </Text>
                 </a>
-            )))}
-    </Container>
+            ))}
+        </Box>
+        <Box width="100%" height="1px" bg="gray.3" />
+    </Box>
 );
+
+const MobileMenu = ({ onClose, ...rest }) => {
+    useEffect(() => () => onClose(), []);
+    return (
+        <Container {...rest}>
+            <Flex justifyContent="flex-end">
+                <Controls.CloseIcon onClick={onClose} />
+            </Flex>
+            <GroupLinks links={LINKS.headerLinks} />
+            <GroupLinks title="Company" links={LINKS.companyLinks} pt="20px" />
+            <GroupLinks title="Work with Coupon Bazaar" links={LINKS.workLinks} pt="20px" />
+            <GroupLinks title="More" links={LINKS.moreLinks} pt="20px" />
+            <GroupLinks title="Main" links={LINKS.mainLinks} pt="20px" />
+            <Flex flexDirection="column" py="20px">
+                <Box pb="20px">
+                    <LogoCopyright size="small" />
+                </Box>
+                <Flex>
+                    <SocialButtons />
+                </Flex>
+            </Flex>
+        </Container>
+    );
+};
 
 export default MobileMenu;
